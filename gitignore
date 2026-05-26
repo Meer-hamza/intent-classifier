@@ -1,0 +1,10 @@
+venv/
+__pycache__/
+*.pyc
+*.pyo
+models/
+*.joblib
+.env
+node_modules/
+ui/dist/
+ui/node_modules/

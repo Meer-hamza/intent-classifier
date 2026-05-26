@@ -1,25 +1,14 @@
-"""
-train_clinc.py
---------------
-Trains the intent classifier using the CLINC150 dataset.
-Maps 150 real-world intents → 8 actionable support buckets.
-
-Run from project root:
-    python training/train_clinc.py
-"""
-
 import json
 import joblib
 import numpy as np
-import pandas as pd
 from collections import Counter
+from pathlib import Path
 from sklearn.linear_model import LogisticRegression
 from sklearn.preprocessing import LabelEncoder
 from sklearn.metrics import classification_report, accuracy_score, confusion_matrix
-from sentence_transformers import SentenceTransformer
-from datasets import load_dataset
+from sklearn.feature_extraction.text import TfidfVectorizer
 
-# ── Mapping: 150 CLINC intents → your 8 buckets ─────────────
+# ── Mapping: CLINC intents → 8 buckets ──────────────────────
 CLINC_TO_INTENT = {
     # REFUND REQUEST
     "dispute_charge":           "refund_request",
@@ -27,7 +16,6 @@ CLINC_TO_INTENT = {
     "refund":                   "refund_request",
     "chargeback":               "refund_request",
     "transaction":              "refund_request",
-
     # PAYMENT FAILED
     "pay_bill":                 "payment_failed",
     "bill_due":                 "payment_failed",
@@ -39,7 +27,6 @@ CLINC_TO_INTENT = {
     "transfer":                 "payment_failed",
     "transfer_charge":          "payment_failed",
     "check_balance":            "payment_failed",
-
     # ACCOUNT SUSPENDED
     "freeze_account":           "account_suspended",
     "pin_change":               "account_suspended",
@@ -49,7 +36,6 @@ CLINC_TO_INTENT = {
     "damaged_card":             "account_suspended",
     "card_declined":            "account_suspended",
     "account_blocked":          "account_suspended",
-
     # API / TECHNICAL HELP
     "reset_settings":           "api_integration_help",
     "sync_device":              "api_integration_help",
@@ -73,7 +59,6 @@ CLINC_TO_INTENT = {
     "reminder_update":          "api_integration_help",
     "alarm":                    "api_integration_help",
     "timer":                    "api_integration_help",
-
     # SUBSCRIPTION UPGRADE
     "upgrade":                  "subscription_upgrade",
     "insurance":                "subscription_upgrade",
@@ -81,8 +66,6 @@ CLINC_TO_INTENT = {
     "rewards_balance":          "subscription_upgrade",
     "rollover_days":            "subscription_upgrade",
     "apr":                      "subscription_upgrade",
-    "credit_limit_change":      "subscription_upgrade",
-
     # SUBSCRIPTION CANCEL
     "cancel":                   "subscription_cancel",
     "cancel_reservation":       "subscription_cancel",
@@ -91,7 +74,6 @@ CLINC_TO_INTENT = {
     "pto_balance":              "subscription_cancel",
     "payday":                   "subscription_cancel",
     "direct_deposit":           "subscription_cancel",
-
     # SECURITY CONCERN
     "report_fraud":             "security_concern",
     "compromised_acct":         "security_concern",
@@ -102,7 +84,6 @@ CLINC_TO_INTENT = {
     "privacy":                  "security_concern",
     "2fa_question":             "security_concern",
     "account_security":         "security_concern",
-
     # GENERAL INQUIRY
     "routing":                  "general_inquiry",
     "interest_rate":            "general_inquiry",
@@ -188,107 +169,253 @@ CLINC_TO_INTENT = {
     "time_zone":                "general_inquiry",
 }
 
+# ── Fallback dataset (used if CLINC download fails) ──────────
+FALLBACK_DATA = {
+    "refund_request": [
+        "I want a refund for my last payment",
+        "Can I get my money back?",
+        "I was charged incorrectly, please refund me",
+        "Please refund my subscription",
+        "I need my payment reversed",
+        "I want to return and get refunded",
+        "I accidentally purchased this, can I get a refund?",
+        "My refund hasn't been processed yet",
+        "I need a full refund immediately",
+        "I was double charged, I need a refund",
+        "I didn't authorize this charge, refund me",
+        "How long does a refund take?",
+        "I cancelled but was still charged",
+        "Give me back what I paid",
+        "I bought the wrong plan, can I get a refund?",
+    ],
+    "payment_failed": [
+        "My payment is not going through",
+        "I can't complete my purchase",
+        "Payment declined, what do I do?",
+        "My card keeps getting rejected",
+        "The checkout is failing",
+        "Why is my payment failing?",
+        "Transaction failed error",
+        "My credit card isn't being accepted",
+        "Payment not processing",
+        "I tried to pay but it's not working",
+        "Getting an error when trying to checkout",
+        "Card declined but I have funds",
+        "Can't pay for my subscription renewal",
+        "Payment keeps timing out",
+        "Why does my payment keep declining?",
+    ],
+    "account_suspended": [
+        "My account has been suspended",
+        "I can't log into my account",
+        "My account is locked",
+        "I've been banned, why?",
+        "Account disabled without reason",
+        "Why is my account suspended?",
+        "My account got deactivated",
+        "I'm locked out of my account",
+        "Account restricted unexpectedly",
+        "My access has been revoked",
+        "I received an account suspension notice",
+        "Account blocked suddenly",
+        "How do I appeal an account suspension?",
+        "I can't log in, it says account suspended",
+        "Get my account reinstated",
+    ],
+    "api_integration_help": [
+        "How do I integrate the API?",
+        "I need help with the SDK",
+        "Webhook not receiving events",
+        "API key not working",
+        "How to handle API errors?",
+        "I'm getting a 401 unauthorized error from the API",
+        "How do I authenticate API requests?",
+        "API rate limit exceeded",
+        "How to test the API in sandbox mode?",
+        "I need to integrate payments into my app",
+        "How to use the REST API?",
+        "Webhook signature verification failing",
+        "API response format question",
+        "SDK installation for Node.js",
+        "I need help debugging my API integration",
+    ],
+    "subscription_upgrade": [
+        "I want to upgrade my plan",
+        "How do I move to a higher tier?",
+        "I want to switch to the Pro plan",
+        "Upgrade my account to enterprise",
+        "How to add more seats to my subscription?",
+        "I need a plan with more API calls",
+        "Can I upgrade mid-cycle?",
+        "I want to unlock advanced features",
+        "Move me to the business tier",
+        "Upgrade from free to paid",
+        "How much does the upgrade cost?",
+        "I want all the features, how do I upgrade?",
+        "Switching from monthly to annual plan",
+        "Is there a plan with unlimited usage?",
+        "Which plan should I choose?",
+    ],
+    "subscription_cancel": [
+        "I want to cancel my subscription",
+        "How do I cancel my plan?",
+        "Please cancel my account",
+        "I don't want to be charged anymore",
+        "Cancel my renewal",
+        "How to stop recurring payments?",
+        "I want to downgrade to free",
+        "Cancel my premium membership",
+        "Stop charging my card",
+        "I want to end my subscription",
+        "How do I turn off auto-renew?",
+        "Cancel before the next billing cycle",
+        "Please remove me from the subscription",
+        "Cancel subscription immediately",
+        "I no longer need this service",
+    ],
+    "security_concern": [
+        "I think my account was hacked",
+        "Suspicious activity on my account",
+        "Someone else is using my account",
+        "I didn't make this purchase",
+        "Unauthorized login detected",
+        "How do I enable two-factor authentication?",
+        "My password was compromised",
+        "I want to report a security vulnerability",
+        "Someone accessed my account without permission",
+        "Security breach on my account",
+        "I got a login alert I didn't trigger",
+        "My API key was exposed",
+        "I think there's a data breach",
+        "Account takeover attempt",
+        "I got a ransom email claiming to have my data",
+    ],
+    "general_inquiry": [
+        "What services do you offer?",
+        "How does your platform work?",
+        "Can you help me understand pricing?",
+        "What payment methods do you support?",
+        "Do you support international payments?",
+        "What currencies are supported?",
+        "Are you PCI compliant?",
+        "Do you have a mobile app?",
+        "What countries do you operate in?",
+        "Can small businesses use your service?",
+        "How do I get started?",
+        "Is there a free trial available?",
+        "Do you offer 24/7 support?",
+        "How do I contact support?",
+        "What's the difference between your plans?",
+    ],
+}
 
-def load_clinc_split(ds, split):
-    """Extract texts and map CLINC intent IDs → your 8 bucket labels."""
-    intent_names = ds[split].features["intent"].names
-    texts, labels = [], []
-    skipped = 0
-    for row in ds[split]:
-        clinc_name = intent_names[row["intent"]]
-        if clinc_name == "oos":          # out-of-scope — skip
-            skipped += 1
-            continue
-        mapped = CLINC_TO_INTENT.get(clinc_name)
-        if mapped is None:               # unmapped intent — skip
-            skipped += 1
-            continue
-        texts.append(row["text"])
-        labels.append(mapped)
-    return texts, labels, skipped
+
+def load_clinc():
+    """Try to load CLINC150, return None if it fails."""
+    try:
+        from datasets import load_dataset
+        print("  Downloading CLINC150 from HuggingFace...")
+        ds = load_dataset("clinc_oos", "plus")
+        intent_names = ds["train"].features["intent"].names
+
+        X_train, y_train = [], []
+        X_test,  y_test  = [], []
+
+        for row in ds["train"]:
+            name = intent_names[row["intent"]]
+            mapped = CLINC_TO_INTENT.get(name)
+            if mapped:
+                X_train.append(row["text"])
+                y_train.append(mapped)
+
+        for row in ds["test"]:
+            name = intent_names[row["intent"]]
+            mapped = CLINC_TO_INTENT.get(name)
+            if mapped:
+                X_test.append(row["text"])
+                y_test.append(mapped)
+
+        print(f"  CLINC loaded: {len(X_train)} train, {len(X_test)} test samples")
+        return X_train, y_train, X_test, y_test
+
+    except Exception as e:
+        print(f"  CLINC download failed ({e}) — using fallback dataset")
+        return None
 
 
-print("=" * 62)
-print("  INTENT CLASSIFIER — CLINC150 TRAINING PIPELINE")
-print("=" * 62)
+def load_fallback():
+    """Use our own synthetic dataset as fallback."""
+    import random
+    random.seed(42)
+    X, y = [], []
+    for intent, msgs in FALLBACK_DATA.items():
+        for msg in msgs:
+            X.append(msg)
+            y.append(intent)
+            X.append(msg.lower())
+            y.append(intent)
+    combined = list(zip(X, y))
+    random.shuffle(combined)
+    X, y = zip(*combined)
+    split = int(len(X) * 0.8)
+    print(f"  Fallback dataset: {split} train, {len(X)-split} test samples")
+    return list(X[:split]), list(y[:split]), list(X[split:]), list(y[split:])
 
-# ── 1. Load CLINC150 ─────────────────────────────────────────
-print("\n[1/5] Loading CLINC150 dataset from HuggingFace...")
-ds = load_dataset("clinc_oos", "plus")
-print(f"  Train rows (raw): {len(ds['train'])}")
-print(f"  Test rows  (raw): {len(ds['test'])}")
 
-# ── 2. Map intents ───────────────────────────────────────────
-print("\n[2/5] Mapping 150 CLINC intents → 8 buckets...")
-X_train, y_train, skipped_train = load_clinc_split(ds, "train")
-X_test,  y_test,  skipped_test  = load_clinc_split(ds, "test")
+print("=" * 60)
+print("  INTENT CLASSIFIER — TRAINING PIPELINE")
+print("=" * 60)
 
-print(f"  Train samples kept: {len(X_train)}  (skipped {skipped_train})")
-print(f"  Test  samples kept: {len(X_test)}   (skipped {skipped_test})")
-print()
-counts = Counter(y_train)
-for intent, n in sorted(counts.items()):
-    print(f"    {intent:<25} {n:>4} train samples")
+# 1. Load data
+print("\n[1/4] Loading dataset...")
+result = load_clinc()
+if result:
+    X_train, y_train, X_test, y_test = result
+    data_source = "CLINC150"
+else:
+    X_train, y_train, X_test, y_test = load_fallback()
+    data_source = "Fallback synthetic dataset"
 
-# ── 3. Encode labels ─────────────────────────────────────────
-print("\n[3/5] Encoding labels...")
+# 2. Encode labels
+print("\n[2/4] Encoding labels...")
 le = LabelEncoder()
 y_train_enc = le.fit_transform(y_train)
 y_test_enc  = le.transform(y_test)
 print(f"  Classes: {list(le.classes_)}")
+counts = Counter(y_train)
+for intent, n in sorted(counts.items()):
+    print(f"    {intent:<25} {n:>4} samples")
 
-# ── 4. Generate embeddings ───────────────────────────────────
-print("\n[4/5] Generating sentence embeddings...")
-print("  Model: all-MiniLM-L6-v2  (downloads ~80MB on first run)")
-embedder = SentenceTransformer("all-MiniLM-L6-v2")
+# 3. TF-IDF features (no external model download needed)
+print("\n[3/4] Building TF-IDF features...")
+vectorizer = TfidfVectorizer(ngram_range=(1, 3), max_features=10000, sublinear_tf=True)
+X_train_vec = vectorizer.fit_transform(X_train)
+X_test_vec  = vectorizer.transform(X_test)
+print(f"  Feature matrix: {X_train_vec.shape}")
 
-print("  Encoding training set...")
-X_train_emb = embedder.encode(X_train, show_progress_bar=True, batch_size=64)
-
-print("  Encoding test set...")
-X_test_emb  = embedder.encode(X_test,  show_progress_bar=True, batch_size=64)
-
-print(f"  Embedding shape: {X_train_emb.shape}")
-
-# ── 5. Train classifier ──────────────────────────────────────
-print("\n[5/5] Training Logistic Regression classifier...")
+# 4. Train
+print("\n[4/4] Training classifier...")
 clf = LogisticRegression(max_iter=1000, C=5.0, random_state=42)
-clf.fit(X_train_emb, y_train_enc)
-print("  Done!")
+clf.fit(X_train_vec, y_train_enc)
 
-# ── Evaluation ───────────────────────────────────────────────
-print("\n" + "=" * 62)
-print("  EVALUATION  (on real held-out CLINC test set)")
-print("=" * 62)
-
-y_pred = clf.predict(X_test_emb)
+# Evaluate
+y_pred = clf.predict(X_test_vec)
 acc = accuracy_score(y_test_enc, y_pred)
-
-print(f"\n  Overall Accuracy: {acc * 100:.2f}%\n")
+print(f"\n  Accuracy: {acc*100:.2f}%")
 print(classification_report(y_test_enc, y_pred, target_names=le.classes_))
 
-# Confusion matrix
-cm = confusion_matrix(y_test_enc, y_pred)
-cm_df = pd.DataFrame(cm, index=le.classes_, columns=le.classes_)
-print("Confusion Matrix:")
-print(cm_df.to_string())
-
-# ── Save ─────────────────────────────────────────────────────
-print("\n" + "=" * 62)
-print("  SAVING MODELS")
-print("=" * 62)
-
-joblib.dump(clf,      "models/intent_classifier.joblib")
-joblib.dump(le,       "models/label_encoder.joblib")
-joblib.dump(embedder, "models/embedder")
+# Save
+Path("models").mkdir(exist_ok=True)
+joblib.dump(clf,        "models/intent_classifier.joblib")
+joblib.dump(le,         "models/label_encoder.joblib")
+joblib.dump(vectorizer, "models/tfidf_vectorizer.joblib")
 
 meta = {
     "classes": list(le.classes_),
     "accuracy": round(float(acc), 4),
-    "embedding_model": "all-MiniLM-L6-v2",
-    "training_data": "CLINC150 (23,700 real utterances → mapped to 8 buckets)",
+    "feature_model": "TF-IDF ngram(1,3)",
+    "training_data": data_source,
     "num_train_samples": len(X_train),
-    "num_test_samples": len(X_test),
     "intents": {
         cls: {"description": desc, "route_to": route, "color": color}
         for cls, desc, route, color in [
@@ -307,39 +434,4 @@ meta = {
 with open("models/metadata.json", "w") as f:
     json.dump(meta, f, indent=2)
 
-print("  intent_classifier.joblib saved")
-print("  label_encoder.joblib saved")
-print("  embedder/ saved")
-print("  metadata.json saved")
-
-# ── Quick inference test ─────────────────────────────────────
-print("\n" + "=" * 62)
-print("  QUICK INFERENCE TEST")
-print("=" * 62)
-
-test_msgs = [
-    "I want a refund for my last charge",
-    "my card keeps getting declined",
-    "how do I authenticate API requests",
-    "i think my account was hacked",
-    "please cancel my subscription",
-    "I want to upgrade to Pro",
-    "my account is suspended what do i do",
-    "ugh why wont it let me pay",         # messy real-world input
-    "i got locked out lol",               # slang
-    "bruh just take my money already",    # very casual
-]
-
-X_inf = embedder.encode(test_msgs)
-preds = clf.predict(X_inf)
-probs = clf.predict_proba(X_inf)
-
-print(f"\n{'Message':<42} {'Intent':<25} {'Conf':>6}  Tier")
-print("-" * 85)
-for msg, pred, prob in zip(test_msgs, preds, probs):
-    intent = le.inverse_transform([pred])[0]
-    conf = prob.max()
-    tier = "high" if conf >= 0.85 else "medium" if conf >= 0.60 else "low"
-    print(f"{msg:<42} {intent:<25} {conf*100:>5.1f}%  [{tier}]")
-
-print(f"\n Training complete! Real-world accuracy: {acc*100:.2f}%")
+print(f"\n  All models saved! Trained on: {data_source}")

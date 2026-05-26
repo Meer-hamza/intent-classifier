@@ -2,7 +2,6 @@ fastapi
 uvicorn[standard]
 scikit-learn
 numpy
-pandas
 joblib
 pydantic
-sentence-transformers
+datasets

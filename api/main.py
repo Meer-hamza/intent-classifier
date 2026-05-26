@@ -7,17 +7,14 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 from typing import Optional
-from sentence_transformers import SentenceTransformer
-# ── Paths ────────────────────────────────────────────────────
+
 BASE = Path(__file__).parent.parent
 MODELS_DIR = BASE / "models"
 
-# ── Load Models ──────────────────────────────────────────────
 print("Loading models...")
-clf       = joblib.load(MODELS_DIR / "intent_classifier.joblib")
-le        = joblib.load(MODELS_DIR / "label_encoder.joblib")
-
-embedder = joblib.load(MODELS_DIR / "embedder")
+clf        = joblib.load(MODELS_DIR / "intent_classifier.joblib")
+le         = joblib.load(MODELS_DIR / "label_encoder.joblib")
+vectorizer = joblib.load(MODELS_DIR / "tfidf_vectorizer.joblib")
 
 with open(MODELS_DIR / "metadata.json") as f:
     metadata = json.load(f)
@@ -25,10 +22,9 @@ with open(MODELS_DIR / "metadata.json") as f:
 print(f"  Loaded {len(metadata['classes'])} intent classes")
 print("  Server ready!")
 
-# ── FastAPI App ──────────────────────────────────────────────
 app = FastAPI(
     title="User Intent Classifier API",
-    description="Classifies user support messages into intents in real-time",
+    description="Classifies support messages into intents in real-time",
     version="1.0.0",
 )
 
@@ -39,10 +35,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# ── Schemas ──────────────────────────────────────────────────
 class ClassifyRequest(BaseModel):
-    text: str = Field(..., min_length=1, max_length=1000, example="I want to cancel my subscription")
-    top_k: Optional[int] = Field(3, ge=1, le=8, description="Number of top intents to return")
+    text: str = Field(..., min_length=1, max_length=1000)
+    top_k: Optional[int] = Field(3, ge=1, le=8)
 
 class IntentResult(BaseModel):
     intent: str
@@ -56,33 +51,19 @@ class ClassifyResponse(BaseModel):
     top_intent: IntentResult
     all_intents: list[IntentResult]
     inference_ms: float
-    confidence_tier: str   # "high" | "medium" | "low"
+    confidence_tier: str
 
-class BatchRequest(BaseModel):
-    texts: list[str] = Field(..., min_length=1, max_length=50)
-
-class HealthResponse(BaseModel):
-    status: str
-    model_accuracy: float
-    num_intents: int
-    num_training_samples: int
-
-# ── Helper ───────────────────────────────────────────────────
 def get_confidence_tier(confidence: float) -> str:
-    if confidence >= 0.85:
-        return "high"
-    elif confidence >= 0.60:
-        return "medium"
+    if confidence >= 0.85: return "high"
+    if confidence >= 0.60: return "medium"
     return "low"
 
-def predict_single(text: str, top_k: int = 3) -> dict:
+def predict_single(text: str, top_k: int = 3) -> ClassifyResponse:
     start = time.perf_counter()
-
-    X = embedder.encode([text])
+    X = vectorizer.transform([text])
     probs = clf.predict_proba(X)[0]
     elapsed_ms = (time.perf_counter() - start) * 1000
 
-    # Sort intents by probability descending
     sorted_idx = np.argsort(probs)[::-1]
     classes = le.classes_
 
@@ -107,73 +88,33 @@ def predict_single(text: str, top_k: int = 3) -> dict:
         confidence_tier=get_confidence_tier(top.confidence),
     )
 
-# ── Routes ───────────────────────────────────────────────────
-
-@app.get("/", tags=["Info"])
+@app.get("/")
 def root():
-    return {
-        "name": "User Intent Classifier API",
-        "version": "1.0.0",
-        "endpoints": {
-            "POST /classify":       "Classify a single message",
-            "POST /classify/batch": "Classify multiple messages",
-            "GET  /intents":        "List all supported intents",
-            "GET  /health":         "Health check",
-            "GET  /docs":           "Interactive API docs (Swagger)",
-        }
-    }
+    return {"name": "Intent Classifier API", "docs": "/docs"}
 
-
-@app.get("/health", response_model=HealthResponse, tags=["Info"])
+@app.get("/health")
 def health():
-    return HealthResponse(
-        status="ok",
-        model_accuracy=metadata["accuracy"],
-        num_intents=len(metadata["classes"]),
-        num_training_samples=metadata["num_samples"],
-    )
-
-
-@app.get("/intents", tags=["Info"])
-def list_intents():
-    """Returns all supported intent categories with routing info."""
     return {
-        "count": len(metadata["intents"]),
-        "intents": metadata["intents"],
+        "status": "ok",
+        "model_accuracy": metadata["accuracy"],
+        "training_data": metadata.get("training_data", ""),
+        "num_intents": len(metadata["classes"]),
     }
 
+@app.get("/intents")
+def list_intents():
+    return {"count": len(metadata["intents"]), "intents": metadata["intents"]}
 
-@app.post("/classify", response_model=ClassifyResponse, tags=["Classification"])
+@app.post("/classify", response_model=ClassifyResponse)
 def classify(req: ClassifyRequest):
-    """
-    Classify a single user message into an intent.
-
-    - **text**: The user's message (1–1000 chars)
-    - **top_k**: How many top intents to return (default 3)
-
-    Returns the predicted intent, confidence score, routing destination,
-    and confidence tier (high / medium / low).
-    """
     if not req.text.strip():
-        raise HTTPException(status_code=400, detail="Text cannot be empty or whitespace.")
+        raise HTTPException(status_code=400, detail="Text cannot be empty.")
     return predict_single(req.text.strip(), top_k=req.top_k)
 
-
-@app.post("/classify/batch", tags=["Classification"])
-def classify_batch(req: BatchRequest):
-    """
-    Classify multiple messages at once (max 50).
-    Returns a list of classification results.
-    """
-    if not req.texts:
+@app.post("/classify/batch")
+def classify_batch(req: dict):
+    texts = req.get("texts", [])
+    if not texts:
         raise HTTPException(status_code=400, detail="texts list cannot be empty.")
-
-    results = []
-    for text in req.texts:
-        if text.strip():
-            results.append(predict_single(text.strip()).model_dump())
-
-    return {
-        "count": len(results),
-        "results": results,
-    }
+    results = [predict_single(t.strip()).model_dump() for t in texts if t.strip()]
+    return {"count": len(results), "results": results}
