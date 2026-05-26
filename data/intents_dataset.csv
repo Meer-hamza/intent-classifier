@@ -1,0 +1,673 @@
+text,intent
+please remove me from the subscription,subscription_cancel
+suspicious activity on my account,security_concern
+my card was charged without permission,refund_request
+I cancelled but was still charged,refund_request
+Upgrade pricing question,subscription_upgrade
+i think my account was hacked,security_concern
+how do i get started?,general_inquiry
+"Hi, transaction failed error",payment_failed
+"Hello, cORS error with API request",api_integration_help
+Please cancel my account,subscription_cancel
+Python library for your API,api_integration_help
+"Excuse me, upgrade pricing question",subscription_upgrade
+"Hello, how does your platform work?",general_inquiry
+"Hey, recover suspended account",account_suspended
+i want to cancel the annual plan,subscription_cancel
+"Hi, refund processing time question",refund_request
+"I've been banned, why?",account_suspended
+Give me back what I paid,refund_request
+cancel before the next billing cycle,subscription_cancel
+What's your SLA?,general_inquiry
+how do i handle failed webhooks?,api_integration_help
+I'm getting a payment error,payment_failed
+Suspicious activity on my account,security_concern
+Do you support international payments?,general_inquiry
+Move me to the business tier,subscription_upgrade
+what's the difference between your plans?,general_inquiry
+"Hi, i need a full refund immediately",refund_request
+I'm getting a 401 unauthorized error from the API,api_integration_help
+"Hey, the product didn't work and I want my money back",refund_request
+My account is locked,account_suspended
+the product didn't work and i want my money back,refund_request
+I want to go from basic to advanced,subscription_upgrade
+Account terminated unfairly,account_suspended
+Account takeover attempt,security_concern
+terminate my subscription,subscription_cancel
+Fraudulent charges on my account,security_concern
+i can't access my account anymore,account_suspended
+Cancel renewal before it happens,subscription_cancel
+What's included in the Premium plan?,subscription_upgrade
+Switching from monthly to annual plan,subscription_upgrade
+"Hey, webhook not receiving events",api_integration_help
+How to get a custom plan?,subscription_upgrade
+api key permissions and scopes,api_integration_help
+"i didn't authorize this charge, refund me",refund_request
+How long have you been in business?,general_inquiry
+"Hello, do you offer discounts for nonprofits?",general_inquiry
+How to test the API in sandbox mode?,api_integration_help
+can't pay for my subscription renewal,payment_failed
+Stop charging my card,subscription_cancel
+Admin removed my access,account_suspended
+account frozen without explanation,account_suspended
+i received an account suspension notice,account_suspended
+"Hey, i can't access my account anymore",account_suspended
+"Hey, upgrade plan for more users",subscription_upgrade
+my trial account got suspended,account_suspended
+"Hi, can small businesses use your service?",general_inquiry
+Please remove me from the subscription,subscription_cancel
+i need a plan with more api calls,subscription_upgrade
+"Hey, my payment is not going through",payment_failed
+How to protect my account from fraud?,security_concern
+i want to unlock advanced features,subscription_upgrade
+I need my payment reversed,refund_request
+how do i appeal an account suspension?,account_suspended
+"Hey, my access has been revoked",account_suspended
+I need help debugging my API integration,api_integration_help
+someone is trying to access my account,security_concern
+how do i get a refund?,refund_request
+i want a refund for my last payment,refund_request
+"i was double charged, i need a refund",refund_request
+Can you show me API documentation?,api_integration_help
+"Hello, suspicious activity on my account",security_concern
+api latency issues,api_integration_help
+"Hey, is there a free trial available?",general_inquiry
+CORS error with API request,api_integration_help
+"Hi, i no longer need this service",subscription_cancel
+"Hey, i got a login alert I didn't trigger",security_concern
+what currencies are supported?,general_inquiry
+"Hello, account takeover attempt",security_concern
+is there a free trial available?,general_inquiry
+I need higher rate limits,subscription_upgrade
+how do i integrate the api?,api_integration_help
+How do I pause instead of cancel?,subscription_cancel
+"Hey, i need more storage, can I upgrade?",subscription_upgrade
+"Hi, security audit for my business account",security_concern
+what's included in the premium plan?,subscription_upgrade
+I need to reset my password urgently,security_concern
+i want to return and get refunded,refund_request
+"Hello, is my data stored securely?",general_inquiry
+How do I cancel my plan?,subscription_cancel
+"Hi, how long does onboarding take?",general_inquiry
+"Hi, do you integrate with other tools?",general_inquiry
+Can you reverse the charge?,refund_request
+"Excuse me, how do I get started?",general_inquiry
+How do I handle failed webhooks?,api_integration_help
+My account got deactivated,account_suspended
+Why was my account disabled?,account_suspended
+Terminate my subscription,subscription_cancel
+is my data stored securely?,general_inquiry
+Someone else is using my account,security_concern
+i want money back for my purchase,refund_request
+"i bought the wrong plan, can i get a refund?",refund_request
+"Hi, billing error on my account",payment_failed
+I need the plan with priority support,subscription_upgrade
+"i want all the features, how do i upgrade?",subscription_upgrade
+how do i contact support?,general_inquiry
+Unauthorized login detected,security_concern
+"Hello, can I upgrade my team's plan?",subscription_upgrade
+I think my account was hacked,security_concern
+how to test the api in sandbox mode?,api_integration_help
+cors error with api request,api_integration_help
+My refund hasn't been processed yet,refund_request
+Cancel my renewal,subscription_cancel
+"Hello, please refund my subscription",refund_request
+how often do you release updates?,general_inquiry
+I didn't make this purchase,security_concern
+please cancel my account,subscription_cancel
+Cancel effective at end of month,subscription_cancel
+discontinue my monthly plan,subscription_cancel
+My PayPal payment failed,payment_failed
+"Hey, can I speak to a sales representative?",general_inquiry
+"Hi, i'm cancelling because it's too expensive",subscription_cancel
+"Excuse me, account disabled without reason",account_suspended
+Why does my payment keep declining?,payment_failed
+How do I go live from test mode?,api_integration_help
+upgrade pricing question,subscription_upgrade
+I want to see my login history,security_concern
+Someone accessed my account without permission,security_concern
+I need to integrate payments into my app,api_integration_help
+Charge me back please,refund_request
+"I didn't authorize this charge, refund me",refund_request
+I need a plan with more API calls,subscription_upgrade
+what are the benefits of upgrading?,subscription_upgrade
+My access has been revoked,account_suspended
+i no longer need this service,subscription_cancel
+"I bought the wrong plan, can I get a refund?",refund_request
+upgrade my account to enterprise,subscription_upgrade
+how to add more seats to my subscription?,subscription_upgrade
+can i upgrade mid-cycle?,subscription_upgrade
+Refund request for order last week,refund_request
+Can small businesses use your service?,general_inquiry
+"Hi, aPI key permissions and scopes",api_integration_help
+end of subscription process,subscription_cancel
+is there a plan with unlimited usage?,subscription_upgrade
+Do you have a mobile app?,general_inquiry
+how to cancel a subscription via api?,api_integration_help
+visa card not accepted,payment_failed
+"Hi, is there a plan with unlimited usage?",subscription_upgrade
+"Hey, get my account reinstated",account_suspended
+My API key was exposed,security_concern
+"Hello, why is my account suspended?",account_suspended
+How do I get started?,general_inquiry
+how do i move to a higher tier?,subscription_upgrade
+api response format question,api_integration_help
+"Hi, i need to change all my security settings",security_concern
+"Hello, i need to reactivate my account",account_suspended
+"Hi, my bank is rejecting the charge",payment_failed
+"Hi, i received an OTP I didn't request",security_concern
+card authorization failed,payment_failed
+Upgrade my account to enterprise,subscription_upgrade
+how to get a custom plan?,subscription_upgrade
+what services do you offer?,general_inquiry
+purchase failed at the last step,payment_failed
+i got an email saying my account was suspended,account_suspended
+i tried to pay but it's not working,payment_failed
+Can I speak to a sales representative?,general_inquiry
+My card keeps getting rejected,payment_failed
+i didn't make this purchase,security_concern
+account flagged and suspended,account_suspended
+"i need more storage, can i upgrade?",subscription_upgrade
+account terminated unfairly,account_suspended
+python library for your api,api_integration_help
+i can't complete my purchase,payment_failed
+my api key was exposed,security_concern
+Billing error on my account,payment_failed
+"Hello, cancel effective at end of month",subscription_cancel
+How often do you release updates?,general_inquiry
+API response format question,api_integration_help
+"Hi, how to delete my subscription?",subscription_cancel
+"failed transaction, help me fix it",payment_failed
+"Hey, i can't complete my purchase",payment_failed
+How do I contact support?,general_inquiry
+API latency issues,api_integration_help
+"Excuse me, my refund hasn't been processed yet",refund_request
+are you pci compliant?,general_inquiry
+my account is locked,account_suspended
+"Hey, how to protect my account from fraud?",security_concern
+"i've been banned, why?",account_suspended
+"I accidentally purchased this, can I get a refund?",refund_request
+i got a login alert i didn't trigger,security_concern
+enable login notifications,security_concern
+How to delete my subscription?,subscription_cancel
+"Hey, unauthorized login detected",security_concern
+i have a general question,general_inquiry
+How long does a refund take?,refund_request
+"Hello, is there a cancellation fee?",subscription_cancel
+"Hi, how much does the upgrade cost?",subscription_upgrade
+the checkout is failing,payment_failed
+"Hi, i can't log into my account",account_suspended
+"Hey, error 402 when paying",payment_failed
+"Hi, account flagged and suspended",account_suspended
+I was charged incorrectly and need a refund,refund_request
+Visa card not accepted,payment_failed
+"i accidentally purchased this, can i get a refund?",refund_request
+"Hello, i want reimbursement for the failed service",refund_request
+create a customer via api,api_integration_help
+Account violation notice received,account_suspended
+What countries do you operate in?,general_inquiry
+My account shows locations I've never been,security_concern
+my business account is inaccessible,account_suspended
+account blocked suddenly,account_suspended
+what's your uptime guarantee?,general_inquiry
+"Excuse me, do you support international payments?",general_inquiry
+What browsers do you support?,general_inquiry
+"Hello, i have a general question",general_inquiry
+I want to report a security vulnerability,security_concern
+"Excuse me, end of subscription process",subscription_cancel
+getting an error when trying to checkout,payment_failed
+Cancel subscription immediately,subscription_cancel
+why does my payment keep declining?,payment_failed
+my refund hasn't been processed yet,refund_request
+api endpoint for refunds,api_integration_help
+My bank is rejecting the charge,payment_failed
+I want to upgrade my plan,subscription_upgrade
+i need to dispute this transaction,refund_request
+How to test webhooks locally?,api_integration_help
+report suspicious transaction,security_concern
+"Hi, can I get my money back?",refund_request
+"Hello, switching from monthly to annual plan",subscription_upgrade
+"Excuse me, what's your uptime guarantee?",general_inquiry
+Cancel but keep my data,subscription_cancel
+i was charged incorrectly and need a refund,refund_request
+i'm locked out of my account,account_suspended
+"Hey, how to use the REST API?",api_integration_help
+api key not working,api_integration_help
+"Hey, upgrade from free to paid",subscription_upgrade
+"Hello, how do I get a refund?",refund_request
+My password was compromised,security_concern
+"Hello, my card was charged without permission",refund_request
+How do I turn off auto-renew?,subscription_cancel
+I think there's a data breach,security_concern
+I'm unable to complete payment,payment_failed
+"Hey, my account got deactivated",account_suspended
+can i get my money back?,refund_request
+graphql vs rest api,api_integration_help
+"Hi, i need my payment reversed",refund_request
+"Hello, why was my account disabled?",account_suspended
+please return the amount i paid,refund_request
+"Hi, i want to go from basic to advanced",subscription_upgrade
+"Excuse me, webhook signature verification failing",api_integration_help
+"Hello, how do I go live from test mode?",api_integration_help
+I'm locked out of my account,account_suspended
+The product didn't work and I want my money back,refund_request
+i'm cancelling because it's too expensive,subscription_cancel
+"Hey, how to stop recurring payments?",subscription_cancel
+End of subscription process,subscription_cancel
+Which plan should I choose?,subscription_upgrade
+i don't want to be charged anymore,subscription_cancel
+admin removed my access,account_suspended
+my credit card isn't being accepted,payment_failed
+how do i cancel my plan?,subscription_cancel
+how long does onboarding take?,general_inquiry
+"Hi, discontinue my monthly plan",subscription_cancel
+cancel but keep my data,subscription_cancel
+my card keeps getting rejected,payment_failed
+"Hi, account violation notice received",account_suspended
+"Hi, what countries do you operate in?",general_inquiry
+"Excuse me, my dashboard shows account suspended",account_suspended
+Security breach on my account,security_concern
+my account shows locations i've never been,security_concern
+Account flagged and suspended,account_suspended
+i'd like to request a refund,refund_request
+"Hey, enterprise plan features and pricing",subscription_upgrade
+"Hello, i can't log in, it says account suspended",account_suspended
+my payment is not going through,payment_failed
+how do i add more projects to my plan?,subscription_upgrade
+i can't log into my account,account_suspended
+SDK setup instructions,api_integration_help
+Is there a cancellation fee?,subscription_cancel
+I have a general question,general_inquiry
+Cancel before the next billing cycle,subscription_cancel
+Upgrade my subscription immediately,subscription_upgrade
+do you integrate with other tools?,general_inquiry
+Get my account reinstated,account_suspended
+i want to end my subscription,subscription_cancel
+api rate limit exceeded,api_integration_help
+How long does cancellation take?,subscription_cancel
+I need to reactivate my account,account_suspended
+"Hi, i want to unlock advanced features",subscription_upgrade
+How do I secure my account?,security_concern
+Account disabled without reason,account_suspended
+How to revoke compromised API keys?,security_concern
+what payment methods do you support?,general_inquiry
+which plan should i choose?,subscription_upgrade
+please refund my subscription,refund_request
+my access has been revoked,account_suspended
+Enterprise plan features and pricing,subscription_upgrade
+"Hi, i want to report a security vulnerability",security_concern
+I need a full refund immediately,refund_request
+what's your data privacy policy?,general_inquiry
+can i upgrade my team's plan?,subscription_upgrade
+"Hello, how do I authenticate API requests?",api_integration_help
+I want to downgrade to free,subscription_cancel
+"Hi, my account shows locations I've never been",security_concern
+"Hello, someone accessed my account without permission",security_concern
+i need a full refund immediately,refund_request
+"Hey, how to get a custom plan?",subscription_upgrade
+i want reimbursement for the failed service,refund_request
+"Hi, what's included in the Premium plan?",subscription_upgrade
+I received an OTP I didn't request,security_concern
+how do i secure my account?,security_concern
+account takeover attempt,security_concern
+please reimburse me for the last transaction,refund_request
+how do i authenticate api requests?,api_integration_help
+"Excuse me, i didn't make this purchase",security_concern
+"Excuse me, i want all the features, how do I upgrade?",subscription_upgrade
+i'm unable to complete payment,payment_failed
+"Hi, stop charging my card",subscription_cancel
+Upgrade plan for more users,subscription_upgrade
+"Hi, i was double charged, I need a refund",refund_request
+"Hey, i got an email saying my account was suspended",account_suspended
+Something went wrong during checkout,payment_failed
+"Hello, do you have a mobile app?",general_inquiry
+"Hi, how to test webhooks locally?",api_integration_help
+"Excuse me, account terminated unfairly",account_suspended
+how does your platform work?,general_inquiry
+something went wrong during checkout,payment_failed
+"Excuse me, card declined but I have funds",payment_failed
+Payment keeps timing out,payment_failed
+"Hello, my trial account got suspended",account_suspended
+"I need more storage, can I upgrade?",subscription_upgrade
+give me back what i paid,refund_request
+My trial account got suspended,account_suspended
+Do you offer discounts for nonprofits?,general_inquiry
+What services do you offer?,general_inquiry
+I need help with the SDK,api_integration_help
+API endpoint for refunds,api_integration_help
+how do i pause instead of cancel?,subscription_cancel
+Payment gateway error,payment_failed
+Pagination in API responses,api_integration_help
+"Hello, i need to integrate payments into my app",api_integration_help
+i got a ransom email claiming to have my data,security_concern
+i want to switch to the pro plan,subscription_upgrade
+"Excuse me, i bought the wrong plan, can I get a refund?",refund_request
+Upgrade from free to paid,subscription_upgrade
+"Excuse me, do you offer 24/7 support?",general_inquiry
+Can't pay for my subscription renewal,payment_failed
+What's the difference between your plans?,general_inquiry
+"Hey, i got a ransom email claiming to have my data",security_concern
+"I can't log in, it says account suspended",account_suspended
+"Hello, aPI key not working",api_integration_help
+"payment declined, what do i do?",payment_failed
+"Hey, purchase failed at the last step",payment_failed
+My dashboard shows account suspended,account_suspended
+i cancelled but was still charged,refund_request
+"Excuse me, is there a demo available?",general_inquiry
+How to add more seats to my subscription?,subscription_upgrade
+is there a demo available?,general_inquiry
+how much does the upgrade cost?,subscription_upgrade
+Card declined but I have funds,payment_failed
+"Hello, cancel but keep my data",subscription_cancel
+my account is under review and suspended,account_suspended
+account restricted unexpectedly,account_suspended
+I received a phishing email from your company,security_concern
+why is my payment failing?,payment_failed
+I need a code example for card tokenization,api_integration_help
+sdk installation for node.js,api_integration_help
+why was my account disabled?,account_suspended
+"Hey, admin removed my access",account_suspended
+"I was double charged, I need a refund",refund_request
+"Hello, create a customer via API",api_integration_help
+Recover suspended account,account_suspended
+card declined but i have funds,payment_failed
+I want to return and get refunded,refund_request
+"i changed my mind, cancel my upgrade",subscription_cancel
+"Excuse me, what services do you offer?",general_inquiry
+Transaction failed error,payment_failed
+"Hey, payment not processing",payment_failed
+I don't want to be charged anymore,subscription_cancel
+Can I get more features?,subscription_upgrade
+"Hey, getting an error when trying to checkout",payment_failed
+refund request for order last week,refund_request
+I can't log into my account,account_suspended
+"Excuse me, graphQL vs REST API",api_integration_help
+API key permissions and scopes,api_integration_help
+"Hello, what's the difference between your plans?",general_inquiry
+API key not working,api_integration_help
+Error 402 when paying,payment_failed
+I want money back for my purchase,refund_request
+"Hi, what's your SLA?",general_inquiry
+I can't complete my purchase,payment_failed
+Can I test the enterprise plan?,subscription_upgrade
+my password was compromised,security_concern
+"Hello, please remove me from the subscription",subscription_cancel
+"Hello, report suspicious transaction",security_concern
+can i get more features?,subscription_upgrade
+Can I upgrade my team's plan?,subscription_upgrade
+How do I appeal an account suspension?,account_suspended
+"i can't log in, it says account suspended",account_suspended
+"Hey, payment gateway error",payment_failed
+"Excuse me, aPI latency issues",api_integration_help
+Cancel my business plan,subscription_cancel
+Webhook signature verification failing,api_integration_help
+Cancel my premium membership,subscription_cancel
+My credit card isn't being accepted,payment_failed
+error 402 when paying,payment_failed
+"Hi, aCH payment not going through",payment_failed
+"Excuse me, do you have an affiliate program?",general_inquiry
+"Hey, aPI rate limit exceeded",api_integration_help
+my team members can't access the account,account_suspended
+ach payment not going through,payment_failed
+"Hello, what currencies are supported?",general_inquiry
+"Hello, i need to reset my password urgently",security_concern
+"Payment declined, what do I do?",payment_failed
+switching from monthly to annual plan,subscription_upgrade
+"Excuse me, can I get more features?",subscription_upgrade
+"Hi, what's your data privacy policy?",general_inquiry
+i want to downgrade to free,subscription_cancel
+someone accessed my account without permission,security_concern
+"Hey, cancel renewal before it happens",subscription_cancel
+"Hello, please return the amount I paid",refund_request
+Enable login notifications,security_concern
+I got a login alert I didn't trigger,security_concern
+"Hey, i need a plan with more API calls",subscription_upgrade
+My team members can't access the account,account_suspended
+"Hi, why can't I pay?",payment_failed
+do you support international payments?,general_inquiry
+"Hello, i think there's a data breach",security_concern
+"Excuse me, my password was compromised",security_concern
+i need help with the sdk,api_integration_help
+ACH payment not going through,payment_failed
+I want to end my subscription,subscription_cancel
+Please return the amount I paid,refund_request
+i want to upgrade my plan,subscription_upgrade
+I no longer need this service,subscription_cancel
+how to test webhooks locally?,api_integration_help
+is there a cancellation fee?,subscription_cancel
+How do I enable two-factor authentication?,security_concern
+I want to cancel the annual plan,subscription_cancel
+Account frozen without explanation,account_suspended
+Why is my account suspended?,account_suspended
+"Hello, what browsers do you support?",general_inquiry
+"Excuse me, how do I move to a higher tier?",subscription_upgrade
+can i test the enterprise plan?,subscription_upgrade
+"I want all the features, how do I upgrade?",subscription_upgrade
+upgrade from free to paid,subscription_upgrade
+Security audit for my business account,security_concern
+How do I authenticate API requests?,api_integration_help
+upgrade my subscription immediately,subscription_upgrade
+How to handle API errors?,api_integration_help
+I want a refund for my last payment,refund_request
+cancel my business plan,subscription_cancel
+i want to report a security vulnerability,security_concern
+charge me back please,refund_request
+security breach on my account,security_concern
+"Hey, the checkout is failing",payment_failed
+i need a code example for card tokenization,api_integration_help
+"Hello, account restricted unexpectedly",account_suspended
+i want to opt out of the service,subscription_cancel
+webhook not receiving events,api_integration_help
+Create a customer via API,api_integration_help
+I got an email saying my account was suspended,account_suspended
+3d secure verification failing,payment_failed
+i want to go from basic to advanced,subscription_upgrade
+i need to reset my password urgently,security_concern
+"Excuse me, my account is locked",account_suspended
+What's your data privacy policy?,general_inquiry
+pagination in api responses,api_integration_help
+My card was charged without permission,refund_request
+someone else is using my account,security_concern
+do you have a mobile app?,general_inquiry
+webhook signature verification failing,api_integration_help
+"Hello, payment declined, what do I do?",payment_failed
+i think there's a data breach,security_concern
+"Hey, how do I turn off auto-renew?",subscription_cancel
+"Excuse me, how do I contact support?",general_inquiry
+"Hello, i'd like to request a refund",refund_request
+my account has been suspended,account_suspended
+"Excuse me, i'm getting a 401 unauthorized error from the API",api_integration_help
+cancel my renewal,subscription_cancel
+I want to switch to the Pro plan,subscription_upgrade
+cancel renewal before it happens,subscription_cancel
+Webhook not receiving events,api_integration_help
+how do i go live from test mode?,api_integration_help
+I need to change all my security settings,security_concern
+What's your uptime guarantee?,general_inquiry
+i need higher rate limits,subscription_upgrade
+can you reverse the charge?,refund_request
+stop charging my card,subscription_cancel
+"Hey, something went wrong during checkout",payment_failed
+can i speak to a sales representative?,general_inquiry
+I received an account suspension notice,account_suspended
+Why is my payment failing?,payment_failed
+i need help debugging my api integration,api_integration_help
+I'd like to request a refund,refund_request
+how to protect my account from fraud?,security_concern
+I tried to pay but it's not working,payment_failed
+"Hey, someone else is using my account",security_concern
+How do I add more projects to my plan?,subscription_upgrade
+I want to cancel my subscription,subscription_cancel
+Card authorization failed,payment_failed
+"Hey, i've been banned, why?",account_suspended
+account violation notice received,account_suspended
+Discontinue my monthly plan,subscription_cancel
+enterprise plan features and pricing,subscription_upgrade
+How does your platform work?,general_inquiry
+Payment not processing,payment_failed
+what countries do you operate in?,general_inquiry
+cancel my premium membership,subscription_cancel
+i need my payment reversed,refund_request
+"Hey, i want to end my subscription",subscription_cancel
+Account restricted unexpectedly,account_suspended
+Purchase failed at the last step,payment_failed
+payment gateway error,payment_failed
+i'm getting a 401 unauthorized error from the api,api_integration_help
+"Hi, my account is under review and suspended",account_suspended
+i want to cancel my subscription,subscription_cancel
+"Hi, i want to upgrade my plan",subscription_upgrade
+I can't access my account anymore,account_suspended
+"Hi, i want to return and get refunded",refund_request
+"Hello, i want to cancel my subscription",subscription_cancel
+account disabled without reason,account_suspended
+why can't i pay?,payment_failed
+Is my data stored securely?,general_inquiry
+Do you integrate with other tools?,general_inquiry
+do you offer discounts for nonprofits?,general_inquiry
+I want to unlock advanced features,subscription_upgrade
+i'm getting a payment error,payment_failed
+do you have an affiliate program?,general_inquiry
+security audit for my business account,security_concern
+move me to the business tier,subscription_upgrade
+Are you PCI compliant?,general_inquiry
+How much does the upgrade cost?,subscription_upgrade
+GraphQL vs REST API,api_integration_help
+"Hello, please reimburse me for the last transaction",refund_request
+billing error on my account,payment_failed
+"Hi, cancel my premium membership",subscription_cancel
+my paypal payment failed,payment_failed
+my employee's credentials were stolen,security_concern
+"Hi, can you reverse the charge?",refund_request
+"Hello, my PayPal payment failed",payment_failed
+Do you have an affiliate program?,general_inquiry
+payment not processing,payment_failed
+"Excuse me, are you PCI compliant?",general_inquiry
+"Excuse me, i want to downgrade to free",subscription_cancel
+"Hello, cancel before the next billing cycle",subscription_cancel
+Why can't I pay?,payment_failed
+"Excuse me, how to handle API errors?",api_integration_help
+payment keeps timing out,payment_failed
+How do I move to a higher tier?,subscription_upgrade
+Can I get my money back?,refund_request
+"Hello, i want money back for my purchase",refund_request
+"Hello, how to test the API in sandbox mode?",api_integration_help
+How long does onboarding take?,general_inquiry
+"Hello, my card keeps getting rejected",payment_failed
+"Hi, how long does a refund take?",refund_request
+"Hello, how do I integrate the API?",api_integration_help
+cancel effective at end of month,subscription_cancel
+how do i enable two-factor authentication?,security_concern
+"Hi, someone is trying to access my account",security_concern
+"Hello, my team members can't access the account",account_suspended
+"Excuse me, upgrade my account to enterprise",subscription_upgrade
+i need to reactivate my account,account_suspended
+sdk setup instructions,api_integration_help
+API rate limit exceeded,api_integration_help
+3D secure verification failing,payment_failed
+"Hi, my credit card isn't being accepted",payment_failed
+Getting an error when trying to checkout,payment_failed
+can you show me api documentation?,api_integration_help
+"Hi, failed transaction, help me fix it",payment_failed
+"Excuse me, i'm getting a payment error",payment_failed
+"Hey, pagination in API responses",api_integration_help
+i received an otp i didn't request,security_concern
+"Hey, i was charged incorrectly and need a refund",refund_request
+"Hi, how do I secure my account?",security_concern
+"Hello, how to cancel a subscription via API?",api_integration_help
+"Hi, i want to see my login history",security_concern
+how do i turn off auto-renew?,subscription_cancel
+Is there a free trial available?,general_inquiry
+How to use the REST API?,api_integration_help
+"Hey, can I test the enterprise plan?",subscription_upgrade
+get my account reinstated,account_suspended
+can small businesses use your service?,general_inquiry
+Can I upgrade mid-cycle?,subscription_upgrade
+"Failed transaction, help me fix it",payment_failed
+What payment methods do you support?,general_inquiry
+"Excuse me, how do I enable two-factor authentication?",security_concern
+what's your sla?,general_inquiry
+how to revoke compromised api keys?,security_concern
+refund processing time question,refund_request
+transaction failed error,payment_failed
+i need to change all my security settings,security_concern
+"Excuse me, cancel subscription immediately",subscription_cancel
+Please refund my subscription,refund_request
+Refund processing time question,refund_request
+What currencies are supported?,general_inquiry
+cancel subscription immediately,subscription_cancel
+How to cancel a subscription via API?,api_integration_help
+"Excuse me, payment keeps timing out",payment_failed
+upgrade plan for more users,subscription_upgrade
+Is there a demo available?,general_inquiry
+recover suspended account,account_suspended
+do you offer 24/7 support?,general_inquiry
+Account blocked suddenly,account_suspended
+how to handle api errors?,api_integration_help
+"Hi, sDK installation for Node.js",api_integration_help
+"Hi, security breach on my account",security_concern
+My employee's credentials were stolen,security_concern
+Tell me about your company,general_inquiry
+"Hi, i don't want to be charged anymore",subscription_cancel
+My payment is not going through,payment_failed
+Please reimburse me for the last transaction,refund_request
+how long have you been in business?,general_inquiry
+Can you help me understand pricing?,general_inquiry
+My account is under review and suspended,account_suspended
+I got a ransom email claiming to have my data,security_concern
+my bank is rejecting the charge,payment_failed
+"Hello, upgrade my subscription immediately",subscription_upgrade
+My business account is inaccessible,account_suspended
+Is it possible to get a partial refund?,refund_request
+"Excuse me, how long have you been in business?",general_inquiry
+is it possible to get a partial refund?,refund_request
+my account got deactivated,account_suspended
+"Excuse me, give me back what I paid",refund_request
+i received a phishing email from your company,security_concern
+Do you offer 24/7 support?,general_inquiry
+"Hello, 3D secure verification failing",payment_failed
+fraudulent charges on my account,security_concern
+unauthorized login detected,security_concern
+"Hello, i want to cancel the annual plan",subscription_cancel
+tell me about your company,general_inquiry
+what browsers do you support?,general_inquiry
+Get me a refund for the premium plan,refund_request
+SDK installation for Node.js,api_integration_help
+"Excuse me, i need to dispute this transaction",refund_request
+i want to see my login history,security_concern
+can you help me understand pricing?,general_inquiry
+get me a refund for the premium plan,refund_request
+"Excuse me, account frozen without explanation",account_suspended
+"Excuse me, aPI response format question",api_integration_help
+"Hey, i'm locked out of my account",account_suspended
+"Hi, card authorization failed",payment_failed
+"Excuse me, how long does cancellation take?",subscription_cancel
+Someone is trying to access my account,security_concern
+how to stop recurring payments?,subscription_cancel
+how to use the rest api?,api_integration_help
+how to delete my subscription?,subscription_cancel
+"Excuse me, can you show me API documentation?",api_integration_help
+What are the benefits of upgrading?,subscription_upgrade
+"Hi, i want a refund for my last payment",refund_request
+Is there a plan with unlimited usage?,subscription_upgrade
+My account has been suspended,account_suspended
+I need to dispute this transaction,refund_request
+i need the plan with priority support,subscription_upgrade
+my dashboard shows account suspended,account_suspended
+"I changed my mind, cancel my upgrade",subscription_cancel
+how long does cancellation take?,subscription_cancel
+"Hello, which plan should I choose?",subscription_upgrade
+"Hello, my account has been suspended",account_suspended
+"Hi, my business account is inaccessible",account_suspended
+The checkout is failing,payment_failed
+How do I get a refund?,refund_request
+"Hello, enable login notifications",security_concern
+how long does a refund take?,refund_request
+"Hi, why is my payment failing?",payment_failed
+Report suspicious transaction,security_concern
+I'm cancelling because it's too expensive,subscription_cancel
+I want reimbursement for the failed service,refund_request
+How do I integrate the API?,api_integration_help
+I want to opt out of the service,subscription_cancel
+i need to integrate payments into my app,api_integration_help
+why is my account suspended?,account_suspended
+How to stop recurring payments?,subscription_cancel

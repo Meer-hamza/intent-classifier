@@ -1,0 +1,57 @@
+{
+  "classes": [
+    "account_suspended",
+    "api_integration_help",
+    "general_inquiry",
+    "payment_failed",
+    "refund_request",
+    "security_concern",
+    "subscription_cancel",
+    "subscription_upgrade"
+  ],
+  "accuracy": 1.0,
+  "embedding_model": "all-MiniLM-L6-v2",
+  "num_samples": 672,
+  "intents": {
+    "refund_request": {
+      "description": "User wants money back",
+      "route_to": "Billing Team",
+      "color": "#f59e0b"
+    },
+    "payment_failed": {
+      "description": "Payment is not going through",
+      "route_to": "Payment Support",
+      "color": "#ef4444"
+    },
+    "account_suspended": {
+      "description": "Account locked or banned",
+      "route_to": "Trust & Safety",
+      "color": "#8b5cf6"
+    },
+    "api_integration_help": {
+      "description": "Developer needs API/SDK help",
+      "route_to": "Developer Support",
+      "color": "#3b82f6"
+    },
+    "subscription_upgrade": {
+      "description": "User wants to upgrade their plan",
+      "route_to": "Sales Team",
+      "color": "#10b981"
+    },
+    "subscription_cancel": {
+      "description": "User wants to cancel",
+      "route_to": "Retention Team",
+      "color": "#f97316"
+    },
+    "security_concern": {
+      "description": "Security breach or fraud",
+      "route_to": "Security Team",
+      "color": "#dc2626"
+    },
+    "general_inquiry": {
+      "description": "General question or information",
+      "route_to": "General Support",
+      "color": "#6b7280"
+    }
+  }
+}
