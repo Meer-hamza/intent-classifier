@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 
-const API_BASE = "http://localhost:8000";
+const API_BASE = "https://intent-classifier-api-8tte.onrender.com";
 
 const INTENT_META = {
   refund_request:       { icon: "💸", color: "#b45309", bg: "#fef3c7", label: "Refund Request" },
